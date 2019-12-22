@@ -10,7 +10,7 @@ Find The Word (FTW) is a game where player have to find correct word.
 
 3 - cd FindTheWord_Game
 
-4 - python3 FindTheWord_Game.py
+4 - python3 FTW.py
 
 5 - Enjoy it !
 
