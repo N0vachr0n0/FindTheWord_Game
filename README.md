@@ -1,6 +1,6 @@
 # Ichinokata
 
-HOW TO RUN ?
+HOW TO RUN ?\n
 
 1 - Open terminal
 2 - Go to the folder of the game
