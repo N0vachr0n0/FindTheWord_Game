@@ -1,18 +1,18 @@
-'''
+"""
 NOM DU PROJET: FIND TH3 WORD
 
-CREATE BY: NI NO KATA
+CREATE BY: N0vachr0n0
 
-VERSION: 1.0
+VERSION: 1.2
 
-'''
+"""
 
 import random
 import os
 import time
 
-def menu ():
 
+def menu():
     print("\n\t\t***********************************")
     print("\t\t**********FIND TH3 WORD ***********")
     print("\t\t***********************************")
@@ -27,17 +27,17 @@ def menu ():
 
     return choix
 
-def Msg (a):
 
+def Msg(a):
     if a == 1:
         print("\nFélicitations vous avez trouvé le Mot correct !!!\n")
-    if a == 2 :
+    if a == 2:
         print("\nDésolé Mot incorrect !! Courage à vous, veillez réessayer.\n")
-    if a == 3 :
+    if a == 3:
         print("\nGAME OVER PARTIE TERMINEE !\n Vous n'avez plus de vie restante !\n")
 
-def ChoixLvl():
 
+def ChoixLvl():
     error = True
     while error == True:
         print("\nCHOISISSEZ LE NIVEAU !\n")
@@ -55,8 +55,8 @@ def ChoixLvl():
 
     return lvl
 
-def Msglvl(lvl):
 
+def Msglvl(lvl):
     if lvl == 1:
         print("\nOh !! Oh ! Oh !!! Vous avez Choisi le niveau FACILE !\nDans ce Mode "
               "vous serez confronter à des mots de 4 lettres\n\n")
@@ -71,18 +71,18 @@ def Msglvl(lvl):
     choixM = input("Appuyer ENTRER pour continuer...")
     return choixM
 
-def Inside(score,vie,X):
 
-    print("\nScore = %i" %(score))
-    print("Vie restante = %i \n"%(vie))
-    print("Voici Une Suite De Lettre : %s"%(X))
+def Inside(score, vie, X):
+    print("\nScore = %i" % (score))
+    print("Vie restante = %i \n" % (vie))
+    print("Voici Une Suite De Lettre : %s" % (X))
     print("\nA Quel Mot correspond il ?\n\n")
     rep = input("Reponse = ")
 
     return rep
 
-def Howto():
 
+def Howto():
     print("\nFIND TH3 WORD est un jeu dans lequel le joueur aura pour objectif de trouver le Mot correct grâce\n"
           "à la suite de lettre qu'il aura reçu.")
     print("\n\nLet's enjoy !!!")
@@ -90,80 +90,38 @@ def Howto():
 
     return choixH
 
+
 def GenerationWord(lvl):
-
+    # global file_word
+    check = []
+    mot = ['data/word_lvl1', 'data/word_lvl2', 'data/word_lvl3']
     if lvl == 1:
-
-        with open('data/word_lvl1', 'r') as file_word:
-            word = file_word.readlines()
-
-            nbr_mot = 0
-            for _ in word:
-                nbr_mot += 1
-
-            for _ in range(1000):  # Pour eviter la repetition de y
-                y = random.randint(0, nbr_mot - 1)
-                if y in check:
-                    continue
-                else:
-                    check.append(y)
-                    break
-
-            Initword = word[y]  # Transfert du mot corr
-
-        return Initword
-
+        file_word = open(mot[lvl - 1], 'r')
     elif lvl == 2:
-
-        with open('data/word_lvl2', 'r') as file_word:
-            word = file_word.readlines()
-
-            nbr_mot = 0
-            for _ in word:
-                nbr_mot += 1
-
-            for _ in range(1000):  # Pour eviter la repetition de y
-                y = random.randint(0, nbr_mot - 1)
-                if y in check:
-                    continue
-                else:
-                    check.append(y)
-                    break
-
-            Initword = word[y]  # Transfert du mot corr
-
-        return Initword
-
+        file_word = open(mot[lvl - 1], 'r')
     elif lvl == 3:
+        file_word = open(mot[lvl - 1], 'r')
 
-        with open('data/word_lvl3', 'r') as file_word:
+    word = file_word.readlines()
 
-            word = file_word.readlines()
+    nbr_mot = 0
+    for _ in word:
+        nbr_mot += 1
 
-            nbr_mot = 0
-            for _ in word: # Trouve le nombre de mots dns le file
-                nbr_mot += 1
+        for _ in range(1000):  # Pour eviter la repetition de y
+            y = random.randint(0, nbr_mot - 1)
+            if y in check:
+                continue
+            else:
+                check.append(y)
+                break
 
-            for _ in range(1000):  # Pour eviter la repetition de y
-                y = random.randint(0, nbr_mot - 1)
-                if y in check:
-                    continue
-                else:
-                    check.append(y)
-                    break
+        Initword = word[y]  # Transfert du mot corr
 
-            Initword = word[y]  # Transfert du mot corr
-
-        return Initword
-
-def Record_score_name(score,player) :
-
-    # Enregistrement du joueur
-
-    # player = input("Entrez votre nom svp : ")
+    return Initword
 
 
-
+def Record_score_name(score, player):
     # ###Traitement du score puis stockage
 
     with open('data/dat_2', 'r') as file3:
@@ -199,8 +157,45 @@ def Record_score_name(score,player) :
     temporaire.close()
 
 
+def playing(life, level):
+    Vie0 = life
+    Score = 0
+    # check = []
+    while Vie0 != 0:
 
-#DEBUT MAIN PROGRAM --------------------------------
+        Initword = GenerationWord(level)  # Initword == Mot initial
+        Initword = Initword.rstrip()  # Enlève \n
+
+        InitwordMod = list(Initword)  # list != str
+        random.shuffle(InitwordMod)  # permute les lettres de InitwordMod / il ne permute que les list
+        wordX = "".join(InitwordMod)
+
+        wordX = str(wordX)  # wordX redevient une str pour pouvoir le comparer à Initword
+        Initword = str(Initword)
+        os.system('clear')
+        rep = Inside(score=Score, vie=Vie0, X=wordX)
+
+        if rep == Initword:
+            print("\nFélicitation ! Mot correct !\n")
+            Score += 1
+            time.sleep(2)
+
+            continue
+        elif rep != Initword:
+            print("\nDommage !! Mot incorrect\n")
+            Vie0 -= 1
+            time.sleep(2)
+            if Vie0 == 0:
+                print("\nGAME OVER !! Vous n'avez plus de vie restante !\n")
+                Record_score_name(Score, player)  # Enregistrement du score
+                rep = input("Appuyer ENTRER pour revenir au menu principal.\n")
+
+                if rep is not None:
+                    break
+            continue
+
+
+# DEBUT MAIN PROGRAM --------------------------------
 while True:
 
     choix = menu()
@@ -213,127 +208,14 @@ while True:
         lvl = ChoixLvl()
         choixM = Msglvl(lvl)
 
-        if (choixM != None) and (lvl == 1): ####################################LVL 1#######################
+        if (choixM != None) and (lvl == 1):
+            playing(4, lvl)
 
-            Vie0 = 4
-            Score = 0
-            check = []
-            while Vie0 != 0:
+        elif (lvl == 2):
+            playing(5, lvl)
 
-                Initword = GenerationWord(lvl)
-                Initword = Initword.rstrip() #Enlève \n
-
-                InitwordMod = list(Initword)  # list != str
-                random.shuffle(InitwordMod)  # permute les lettres de InitwordMod / il ne permute que les list
-                wordX = "".join(InitwordMod)
-
-                wordX = str(wordX)  # wordX redevient une str pour pouvoir le comparer à Initword
-                Initword = str(Initword)
-                os.system('clear')
-                rep = Inside(score=Score, vie=Vie0, X=wordX)
-
-                if rep == Initword:
-                    print("\nFélicitation ! Mot correct !\n")
-                    Score += 1
-                    time.sleep(2)
-                # rep = input("Appuyer ENTRER pour continuer...\n")
-                # if rep != None:
-                #   continue
-                    continue
-                elif rep != Initword:
-                    print("\nDommage !! Mot incorrect\n")
-                    Vie0 -= 1
-                    time.sleep(2)
-                    if Vie0 == 0:
-                        print("\nGAME OVER !! Vous n'avez plus de vie restante !\n")
-                        Record_score_name(Score,player) #Enregistrement du score
-                        rep = input("Appuyer ENTRER pour revenir au menu principal.\n")
-                        if rep != None:
-                            break
-                    continue
-        #FIN---LVL1-----------------------------------
-
-        elif (choixM != None) and (lvl == 2): #####################LVL 2################################
-
-            Vie0 = 5
-            Score = 0
-            check = []
-            while Vie0 != 0:
-
-                Initword = GenerationWord(lvl)
-                Initword = Initword.rstrip()  # Enlève \n
-
-                InitwordMod = list(Initword)  # list != str
-                random.shuffle(InitwordMod)  # permute les lettres de InitwordMod / il ne permute que les list
-                wordX = "".join(InitwordMod)
-
-                wordX = str(wordX)  # wordX redevient une str pour pouvoir le comparer à Initword
-
-                os.system('clear')
-                rep = Inside(score=Score, vie=Vie0, X=wordX)
-
-                if rep == Initword:
-                    print("\nFélicitation ! Mot correct !\n")
-                    Score += 1
-                    time.sleep(2)
-                    # rep = input("Appuyer ENTRER pour continuer...\n")
-                    # if rep != None:
-                    #   continue
-                    continue
-                elif rep != Initword:
-                    print("\nDommage !! Mot incorrect\n")
-                    Vie0 -= 1
-                    time.sleep(2)
-                    if Vie0 == 0:
-                        print("\nGAME OVER !! Vous n'avez plus de vie restante !\n")
-                        Record_score_name(Score, player)
-                        rep = input("Appuyer ENTRER pour revenir au menu principal.\n")
-                        if rep != None:
-                            break
-                    continue
-
-        # ##############FIN LVL2###################################################
-
-        elif (choixM != None) and (lvl == 3): # ###################################LVL 3###########################
-
-            Vie0 = 6
-            Score = 0
-            check = []
-            while Vie0 != 0:
-
-                Initword = GenerationWord(lvl)
-                Initword = Initword.rstrip()  # Enlève \n
-
-                InitwordMod = list(Initword)  # list != str
-                random.shuffle(InitwordMod)  # permute les lettres de InitwordMod / il ne permute que les list
-                wordX = "".join(InitwordMod)
-
-                wordX = str(wordX)  # wordX redevient une str pour pouvoir le comparer à Initword
-
-                os.system('clear')
-                rep = Inside(score=Score, vie=Vie0, X=wordX)
-
-                if rep == Initword:
-                    print("\nFélicitation ! Mot correct !\n")
-                    Score += 1
-                    time.sleep(2)
-                    # rep = input("Appuyer ENTRER pour continuer...\n")
-                    # if rep != None:
-                    #   continue
-                    continue
-                elif rep != Initword:
-                    print("\nDommage !! Mot incorrect\n")
-                    Vie0 -= 1
-                    time.sleep(2)
-                    if Vie0 == 0:
-                        print("\nGAME OVER !! Vous n'avez plus de vie restante !\n")
-                        Record_score_name(Score, player)
-                        rep = input("Appuyer ENTRER pour revenir au menu principal.\n")
-                        if rep != None:
-                            break
-                    continue
-
-        # ######FIN LVL3###################################################
+        elif (lvl == 3):
+            playing(6, lvl)
     # ---------------------------------------FIN CHOIX LVL------------------------------------------------
 
     elif choix == 2:
@@ -344,9 +226,7 @@ while True:
         if choix != None:
             continue
 
-
-
-    elif choix == 3 : # Best score
+    elif choix == 3:  # Best score
 
         os.system('clear')
         # Affichage des meilleurs scores
@@ -368,11 +248,12 @@ while True:
             continue
 
 
-    elif choix == 4: # DEMO
+    elif choix == 4:
+        # DEMO
 
         os.system('clear')
-        word =["visages","visait","visage"," tortionnaire"," tortue", "ambitieusement", "extérieur",
-               "tortiller", "extérieure", "visa", "ambitieux"]
+        word = ["visages", "visait", "visage", " tortionnaire", " tortue", "ambitieusement", "extérieur",
+                "tortiller", "extérieure", "visa", "ambitieux"]
 
         Vie0 = 3
         Score = 0
@@ -380,7 +261,7 @@ while True:
 
         while Vie0 != 0:
 
-            for _ in range(1000):# Pour eviter la repetition de y
+            for _ in range(1000):  # Pour eviter la repetition de y
                 y = random.randint(0, 10)
                 if y in check:
                     continue
@@ -389,14 +270,14 @@ while True:
                     break
 
             Initword = word[y]
-            InitwordMod = list(word[y]) # list != str
+            InitwordMod = list(word[y])  # list != str
 
             random.shuffle(InitwordMod)  # permute les lettres de InitwordMod
             wordX = "".join(InitwordMod)
             wordX = str(wordX)
 
             os.system('clear')
-            rep = Inside(score=Score,vie=Vie0,X=wordX)
+            rep = Inside(score=Score, vie=Vie0, X=wordX)
 
             if rep == Initword:
                 print("\nFélicitation ! Mot correct !\n")
@@ -404,7 +285,7 @@ while True:
                 time.sleep(2)
                 # rep = input("Appuyer ENTRER pour continuer...\n")
                 # if rep != None:
-                 #   continue
+                #   continue
                 continue
             elif rep != Initword:
                 print("\nDommage !! Mot incorrect\n")
