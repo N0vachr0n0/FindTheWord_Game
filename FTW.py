@@ -28,15 +28,6 @@ def menu():
     return choix
 
 
-def Msg(a):
-    if a == 1:
-        print("\nFélicitations vous avez trouvé le Mot correct !!!\n")
-    if a == 2:
-        print("\nDésolé Mot incorrect !! Courage à vous, veillez réessayer.\n")
-    if a == 3:
-        print("\nGAME OVER PARTIE TERMINEE !\n Vous n'avez plus de vie restante !\n")
-
-
 def ChoixLvl():
     error = True
     while error == True:
@@ -182,7 +173,7 @@ def playing(life, level):
             cpt += 1
             if cpt in [3,5,10,12,15,18,20]:
                 Vie0 += 3
-                print("Waouh !! continuez comme ça !,vous avez gagné 3 vie en plus!!!\n) 
+                print("Waouh !! continuez comme ça !,vous avez gagné 3 vie en plus!!!\n") 
             time.sleep(2)
 
             continue
