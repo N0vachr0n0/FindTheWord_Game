@@ -160,6 +160,7 @@ def Record_score_name(score, player):
 def playing(life, level):
     Vie0 = life
     Score = 0
+    cpt = 0
     # check = []
     while Vie0 != 0:
 
@@ -178,13 +179,18 @@ def playing(life, level):
         if rep == Initword:
             print("\nFélicitation ! Mot correct !\n")
             Score += 1
+            cpt += 1
+            if cpt in [3,5,10,12,15,18,20]:
+                Vie0 += 3
+                print("Waouh !! continuez comme ça !,vous avez gagné 3 vie en plus!!!\n) 
             time.sleep(2)
 
             continue
         elif rep != Initword:
-            print("\nDommage !! Mot incorrect\n")
+            print("\nDommage !! Mot incorrect\nLe mot était: ",Initword)
             Vie0 -= 1
-            time.sleep(2)
+            cpt -= 1
+            time.sleep(4)
             if Vie0 == 0:
                 print("\nGAME OVER !! Vous n'avez plus de vie restante !\n")
                 Record_score_name(Score, player)  # Enregistrement du score
