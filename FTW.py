@@ -1,10 +1,7 @@
 """
 NOM DU PROJET: FIND TH3 WORD
-
 CREATE BY: N0vachr0n0
-
 VERSION: 1.2
-
 """
 
 import random
@@ -13,12 +10,12 @@ import time
 
 
 def menu():
-    print("\n\t\t***********************************")
-    print("\t\t**********FIND TH3 WORD ***********")
-    print("\t\t***********************************")
+    print("\n\t\t\t\t\t***********************************")
+    print("\t\t\t\t\t**********FIND TH3 WORD ***********")
+    print("\t\t\t\t\t***********************************")
 
-    print("\n\n\t\tBIENVENU DANS FIND TH3 WORD !!\n")
-    print("\n\t\t--------MENU PRINCIPAL--------\n")
+    print("\n\n\t\t\t\t\t  BIENVENU DANS FIND TH3 WORD !!\n")
+    print("\n\t\t\t\t\t-----------MENU PRINCIPAL-----------\n")
 
     print("1 -> JOUER \n2 -> COMMENT JOUER ? \n3 -> MEILLEUR SCORE \n4 -> DEMO\n5 -> SORTIR\n")
     print("Credit : NI NO KATA\n")
@@ -26,7 +23,6 @@ def menu():
     choix = int(choix)
 
     return choix
-
 
 def ChoixLvl():
     error = True
@@ -164,7 +160,7 @@ def playing(life, level):
 
         wordX = str(wordX)  # wordX redevient une str pour pouvoir le comparer à Initword
         Initword = str(Initword)
-        os.system('clear')
+        clean()
         rep = Inside(score=Score, vie=Vie0, X=wordX)
 
         if rep == Initword:
@@ -173,7 +169,7 @@ def playing(life, level):
             cpt += 1
             if cpt in [3,5,10,12,15,18,20]:
                 Vie0 += 3
-                print("Waouh !! continuez comme ça !,vous avez gagné 3 vie en plus!!!\n") 
+                print("Waouh !! continuez comme ça !,vous avez gagné 3 vie en plus!!!\n")
             time.sleep(2)
 
             continue
@@ -191,17 +187,26 @@ def playing(life, level):
                     break
             continue
 
+def clean ():
+
+    if os.name == 'nt': # windows
+        action = os.system('cls')
+    else:
+       action = os.system('clear')
+    return action
+
 
 # DEBUT MAIN PROGRAM --------------------------------
 while True:
-
+    
+    clean()
     choix = menu()
     if choix == 1:
 
-        os.system('clear')
+        clean()
         player = input("Entrez votre nom svp : ")
 
-        os.system('clear')
+        clean()
         lvl = ChoixLvl()
         choixM = Msglvl(lvl)
 
@@ -217,7 +222,7 @@ while True:
 
     elif choix == 2:
 
-        os.system('clear')
+        clean()
         choixH = Howto()
 
         if choix != None:
@@ -225,7 +230,7 @@ while True:
 
     elif choix == 3:  # Best score
 
-        os.system('clear')
+        clean()
         # Affichage des meilleurs scores
         with open('data/dat_2', 'r') as file:
             score_part2 = file.readlines()
@@ -242,13 +247,14 @@ while True:
             # i+1 à cause du titre "meilleur score "
         rep = input("Entrez 1 pour revenir au menu principal.")
         if rep != None:
+            clean()
             continue
 
 
     elif choix == 4:
         # DEMO
 
-        os.system('clear')
+        clean()
         word = ["visages", "visait", "visage", " tortionnaire", " tortue", "ambitieusement", "extérieur",
                 "tortiller", "extérieure", "visa", "ambitieux"]
 
@@ -273,7 +279,7 @@ while True:
             wordX = "".join(InitwordMod)
             wordX = str(wordX)
 
-            os.system('clear')
+            clean()
             rep = Inside(score=Score, vie=Vie0, X=wordX)
 
             if rep == Initword:
